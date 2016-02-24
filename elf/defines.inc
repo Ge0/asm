@@ -35,14 +35,13 @@
 %define EM_MIPS         7
 %define EM_PARISC       8
 %define EM_SPARC32PLUS  9
-%define EM_PPC          10
-%define EM_PPC64        11
-%define EM_S390         12
-%define EM_ARM          13
+%define EM_PPC          20
+%define EM_PPC64        21
+%define EM_S390         22
 %define EM_SH           14
 %define EM_SPARCV9      15
-%define EM_IA_64        16
-%define EM_X86_64       17
+%define EM_IA_64        50
+%define EM_X86_64       62
 %define EM_VAX          18
 
 %define EI_NIDENT   16
@@ -66,6 +65,25 @@ struc Elf32_Ehdr
   .size:
 endstruc
 
+struc Elf64_Ehdr
+  .e_ident:     resb 16
+  .e_type:      resw 1
+  .e_machine:   resw 1
+  .e_version:   resd 1
+  .e_entry:     resq 1
+  .e_phoff:     resq 1
+  .e_shoff:     resq 1
+  .e_flags:     resd 1
+  .e_ehsize:    resw 1
+  .e_phentsize: resw 1
+  .e_phnum:     resw 1
+  .e_shentsize: resw 1
+  .e_shnum:     resw 1
+  .e_shstrndx   resw 1
+
+  .size:
+endstruc
+
 ; These constants define the permissions on sections in the program
 ; header, p_flags.
 %define PF_R        0x4
@@ -84,6 +102,21 @@ struc Elf32_Phdr
 
   .size:
 endstruc
+
+struc Elf64_Phdr
+  .p_type:   resd 1
+  .p_flags:  resd 1
+  .p_offset: resq 1
+  .p_vaddr:  resq 1
+  .p_paddr:  resq 1
+  .p_filesz: resq 1
+  .p_memsz:  resq 1
+  .p_align:  resq 1
+
+  .size:
+endstruc
+
+
 
 %define EI_MAG0     0   ; e_ident[] indexes
 %define EI_MAG1     1
